@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  spark-master:
+    image: ruloweb/spark:2.2.0
+    ports:
+      - 8080:8080
+      - 7077:7077
+    networks:
+      spark:
+        aliases:
+          - master
+    entrypoint:
+      - /opt/spark-2.2.0-bin-hadoop2.7/bin/spark-class
+      - org.apache.spark.deploy.master.Master
+  spark-worker:
+    image: ruloweb/spark:2.2.0
+    ports:
+      - 8081:8081
+    networks:
+      - spark
+    entrypoint:
+      - /opt/spark-2.2.0-bin-hadoop2.7/bin/spark-class
+      - org.apache.spark.deploy.worker.Worker
+      - master:7077
+
+networks:
+  spark:
