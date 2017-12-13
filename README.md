@@ -24,9 +24,10 @@ Keep in mind that you need to set the `spark.driver.host` to a address reachable
 
 ### Scaling
 
-If you wish to increase the number of workers scale the `worker` service by running the `scale` command like follows:
+If you wish to increase the number of workers or data nodes use the `scale` command like follows:
 
 ```sh
-docker-compose scale worker=2
+docker-compose scale spark_worker=2
+docker-compose scale data_node=3
 ```
 

@@ -1,7 +1,8 @@
 version: '3'
 
 services:
-  spark-master:
+
+  spark_master:
     image: ruloweb/spark:2.2.0
     ports:
       - 8080:8080
@@ -13,16 +14,47 @@ services:
     entrypoint:
       - /opt/spark-2.2.0-bin-hadoop2.7/bin/spark-class
       - org.apache.spark.deploy.master.Master
-  spark-worker:
+
+  spark_worker:
     image: ruloweb/spark:2.2.0
     ports:
-      - 8081:8081
+      - 8081
     networks:
       - spark
     entrypoint:
       - /opt/spark-2.2.0-bin-hadoop2.7/bin/spark-class
       - org.apache.spark.deploy.worker.Worker
       - master:7077
+
+  name_node:
+    image: rcgenova/hadoop-2.7.3
+    command: [
+      "bash",
+      "-c",
+      "hdfs namenode -format && exec hdfs namenode -D fs.defaultFS=hdfs://hdfs/ -D dfs.permissions.enabled=false"
+    ]
+    ports:
+      - 8020:8020
+      - 50070:50070
+    networks:
+      spark:
+        aliases:
+          - hdfs
+
+  data_node:
+    image: rcgenova/hadoop-2.7.3
+    command: [
+      "hdfs",
+      "datanode",
+      "-D",
+      "fs.defaultFS=hdfs://hdfs/",
+      "-D",
+      "dfs.permissions.enabled=false"
+    ]
+    ports:
+      - 50075
+    networks:
+      - spark
 
 networks:
   spark:
