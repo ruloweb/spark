@@ -56,5 +56,15 @@ services:
     networks:
       - spark
 
+  hive:
+    image: ruloweb/hive:2.3.3
+    command: hiveserver2
+    volumes:
+      - "./hive:/data"
+    ports:
+      - 10000
+    networks:
+      - spark
+
 networks:
   spark:
