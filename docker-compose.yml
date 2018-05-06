@@ -17,8 +17,6 @@ services:
 
   spark_worker:
     image: ruloweb/spark:2.3.0
-    ports:
-      - 8081
     networks:
       - spark
     entrypoint:
