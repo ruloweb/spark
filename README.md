@@ -20,7 +20,7 @@ If you are using the docker composer file above, you can access the spark master
 spark-shell --master spark://localhost:7077 --conf spark.driver.host=172.17.0.1
 ```
 
-Keep in mind that you need to set the `spark.driver.host` to a address reachable from the Spark Workers
+Keep in mind that you need to set the `spark.driver.host` to an address reachable from the Spark Workers
 
 ### Scaling
 
