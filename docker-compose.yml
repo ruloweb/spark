@@ -31,7 +31,7 @@ services:
     command: [
       "bash",
       "-c",
-      "hdfs namenode -format && exec hdfs namenode -D fs.defaultFS=hdfs://hdfs/ -D dfs.permissions.enabled=false"
+      "hdfs namenode -format -nonInteractive ; exec hdfs namenode -D fs.defaultFS=hdfs://hdfs/ -D dfs.permissions.enabled=false"
     ]
     ports:
       - 8020:8020
