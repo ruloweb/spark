@@ -29,8 +29,12 @@ services:
     command: [
       "bash",
       "-c",
-      "hdfs namenode -format -nonInteractive ; exec hdfs namenode -D fs.defaultFS=hdfs://hdfs/ -D dfs.permissions.enabled=false"
+      "hdfs namenode -format -nonInteractive ; exec hdfs namenode"
     ]
+    volumes:
+      - "./core-site.xml:/usr/local/hadoop-2.7.3/etc/hadoop/core-site.xml"
+      - "./hdfs-site.xml:/usr/local/hadoop-2.7.3/etc/hadoop/hdfs-site.xml"
+      - /data
     ports:
       - 8020:8020
       - 50070:50070
@@ -43,12 +47,12 @@ services:
     image: rcgenova/hadoop-2.7.3
     command: [
       "hdfs",
-      "datanode",
-      "-D",
-      "fs.defaultFS=hdfs://hdfs/",
-      "-D",
-      "dfs.permissions.enabled=false"
+      "datanode"
     ]
+    volumes:
+      - "./core-site.xml:/usr/local/hadoop-2.7.3/etc/hadoop/core-site.xml"
+      - "./hdfs-site.xml:/usr/local/hadoop-2.7.3/etc/hadoop/hdfs-site.xml"
+      - /data
     ports:
       - 50075
     networks:
