@@ -12,7 +12,7 @@ services:
         aliases:
           - master
     entrypoint:
-      - /opt/spark-2.3.0-bin-hadoop2.7/bin/spark-class
+      - spark-class
       - org.apache.spark.deploy.master.Master
 
   spark_worker:
@@ -20,7 +20,7 @@ services:
     networks:
       - spark
     entrypoint:
-      - /opt/spark-2.3.0-bin-hadoop2.7/bin/spark-class
+      - spark-class
       - org.apache.spark.deploy.worker.Worker
       - master:7077
 
