@@ -22,10 +22,6 @@
         <value>hdfs://hdfs/</value>
     </property>
     <property>
-        <name>file.replication</name>
-        <value>0</value>
-    </property>
-    <property>
         <name>hadoop.tmp.dir</name>
         <value>/data</value>
     </property>
