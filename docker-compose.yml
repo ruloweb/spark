@@ -16,6 +16,7 @@ services:
       - org.apache.spark.deploy.master.Master
     volumes:
       - "./core-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/core-site.xml"
+      - "./hive-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/hive-site.xml"
 
   spark_worker:
     image: ruloweb/spark:2.3.0
@@ -27,6 +28,7 @@ services:
       - master:7077
     volumes:
       - "./core-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/core-site.xml"
+      - "./hive-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/hive-site.xml"
 
   name_node:
     image: rcgenova/hadoop-2.7.3
@@ -64,13 +66,12 @@ services:
 
   hive:
     image: ruloweb/hive2:2.3.3
-    command: hiveserver2
     volumes:
       - "./hive:/data"
-    ports:
-      - 10000
     networks:
-      - spark
+      spark:
+        aliases:
+          - hive
 
 networks:
   spark:
