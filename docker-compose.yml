@@ -3,7 +3,7 @@ version: '3'
 services:
 
   spark_master:
-    image: ruloweb/spark:2.3.0
+    image: ruloweb/spark:1.6.3
     ports:
       - 8080:8080
       - 7077:7077
@@ -15,11 +15,11 @@ services:
       - spark-class
       - org.apache.spark.deploy.master.Master
     volumes:
-      - "./core-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/core-site.xml"
-      - "./hive-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/hive-site.xml"
+      - "./core-site.xml:/usr/local/spark-1.6.3-bin-hadoop2.6/conf/core-site.xml"
+      - "./hive-site.xml:/usr/local/spark-1.6.3-bin-hadoop2.6/conf/hive-site.xml"
 
   spark_worker:
-    image: ruloweb/spark:2.3.0
+    image: ruloweb/spark:1.6.3
     networks:
       - spark
     entrypoint:
@@ -27,19 +27,19 @@ services:
       - org.apache.spark.deploy.worker.Worker
       - master:7077
     volumes:
-      - "./core-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/core-site.xml"
-      - "./hive-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/hive-site.xml"
+      - "./core-site.xml:/usr/local/spark-1.6.3-bin-hadoop2.6/conf/core-site.xml"
+      - "./hive-site.xml:/usr/local/spark-1.6.3-bin-hadoop2.6/conf/hive-site.xml"
 
   name_node:
-    image: ruloweb/hadoop:2.7.6
+    image: ruloweb/hadoop:2.6.5
     command: [
       "bash",
       "-c",
       "hdfs namenode -format -nonInteractive ; exec hdfs namenode"
     ]
     volumes:
-      - "./core-site.xml:/usr/local/hadoop-2.7.6/etc/hadoop/core-site.xml"
-      - "./hdfs-site.xml:/usr/local/hadoop-2.7.6/etc/hadoop/hdfs-site.xml"
+      - "./core-site.xml:/usr/local/hadoop-2.6.5/etc/hadoop/core-site.xml"
+      - "./hdfs-site.xml:/usr/local/hadoop-2.6.5/etc/hadoop/hdfs-site.xml"
       - /data
     ports:
       - 8020:8020
@@ -50,14 +50,14 @@ services:
           - hdfs
 
   data_node:
-    image: ruloweb/hadoop:2.7.6
+    image: ruloweb/hadoop:2.6.5
     command: [
       "hdfs",
       "datanode"
     ]
     volumes:
-      - "./core-site.xml:/usr/local/hadoop-2.7.6/etc/hadoop/core-site.xml"
-      - "./hdfs-site.xml:/usr/local/hadoop-2.7.6/etc/hadoop/hdfs-site.xml"
+      - "./core-site.xml:/usr/local/hadoop-2.6.5/etc/hadoop/core-site.xml"
+      - "./hdfs-site.xml:/usr/local/hadoop-2.6.5/etc/hadoop/hdfs-site.xml"
       - /data
     ports:
       - 50075
