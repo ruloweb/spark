@@ -68,6 +68,8 @@ services:
     image: ruloweb/hive2:2.3.3
     volumes:
       - "./hive:/data"
+    ports:
+      - 9083:9083
     networks:
       spark:
         aliases:
