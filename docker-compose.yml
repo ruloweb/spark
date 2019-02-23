@@ -17,6 +17,23 @@ services:
     volumes:
       - "./core-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/core-site.xml"
       - "./hive-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/hive-site.xml"
+      - "./spark-defaults.conf:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/spark-defaults.conf"
+      - "./spark-logs:/spark-logs"
+
+  spark_history:
+    image: ruloweb/spark:2.3.0
+    ports:
+      - 18080:18080
+    networks:
+      spark:
+        aliases:
+          - master
+    entrypoint:
+      - spark-class
+      - org.apache.spark.deploy.history.HistoryServer
+    volumes:
+      - "./spark-defaults.conf:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/spark-defaults.conf"
+      - "./spark-logs:/spark-logs"
 
   spark_worker:
     image: ruloweb/spark:2.3.0
@@ -29,6 +46,7 @@ services:
     volumes:
       - "./core-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/core-site.xml"
       - "./hive-site.xml:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/hive-site.xml"
+      - "./spark-defaults.conf:/usr/local/spark-2.3.0-bin-hadoop2.7/conf/spark-defaults.conf"
 
   name_node:
     image: ruloweb/hadoop:2.7.6
